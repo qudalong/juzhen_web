@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>行业方案</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+	</head>
+	<body>
+		<!-- 导航 -->
+		<nav class="navbar navbar-expand-lg navbar-light  navbar-fixed-top">
+			<div class="container">
+				<a href="" class="navbar-brand"><img src="img/logo.png"></a>
+				<div class="d-flex ml-auto">
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#globalNavbar" aria-controls="globalNavbar"
+					 aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+				</div>
+				<div class="collapse navbar-collapse" id="globalNavbar">
+					<ul class=" navbar-nav ml-md-auto">
+						<li class="nav-item"><a class="nav-link" href="index.html">首页</a></li>
+						<li class="nav-item"><a class="nav-link" href="cpfw.html">产品服务</a></li>
+						<li class="nav-item"><a class="nav-link act" href="hyfa.html">行业方案</a></li>
+						<li class="nav-item"><a class="nav-link" href="anli.html">案例展示</a></li>
+						<li class="nav-item"><a class="nav-link" href="news.html">新闻动态</a></li>
+						<li class="nav-item"><a class="nav-link" href="aboutUs.html">关于我们</a></li>
+						<li class="nav-item"><a class="nav-link" href="telUs.html">联系我们</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<!-- banner -->
+		<div class="jumbotron masthead home-banner-bg hy-bg">
+			<div class="container text-center ">
+				<h2>行业方案</h2>
+				<p>------------Product Service------------</p>
+			</div>
+		</div>
+		<!--  客户案例-->
+		<div class="projects-header page-header">
+			<div id="html_temp" class="row d-flex justify-content-around"></div>
+		</div>
+		<footer class="footer mt30">
+			<div class="container">
+				<div class="row row-grid align-items-center mb-5">
+					<div class="col-md-10">
+						<div class="row">
+							<p class="col-md-3">服务热线：0755-88888</p>
+							<p class="col-md-3">邮箱：service@matrix.show</p>
+							<p class="col-md-6">地址：广东省深圳市南山区xx路xx大厦1888</p>
+						</div>
+
+						<div class="row">
+							<p class="col-md-12 mb-8">友情链接：xx科技集团</p>
+							<p class="col-md-12 mb-8">Copyright © 2012-2020 Tencent. All Rights Reserved.</p>
+						</div>
+						
+					</div>
+					<div class="col-md-2 text-center">
+						<img  id="code"  src="img/code.png" height="100" width="100">
+					</div>
+				</div>
+			</div>
+		</footer>
+	</body>
+	<script type="text/x-jsrender" id="J_tpl_hyfa">
+		<a href="hyfaDetail.html?id={{:id}}" class="card mb-3  p-1 col-md-5">
+				<div class="row no-gutters relative">
+					<div class="col-md-4">
+						<img src="{{:smallimage}}" class="card-img" height="188" alt="...">
+					</div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title r2">{{:title}}</h5>
+							<div class="card-text r3 h80">{{:maincontent}}</div>
+							<div class="card-text text-right"><small class="text-muted">了解更多</small></div>
+						</div>
+					</div>
+				</div>
+			</a>
+	</script>
+	<!-- js -->
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/util.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jsrender.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		hyfa_list();
+
+		function hyfa_list() {
+			var tmpl = $.templates("#J_tpl_hyfa");
+			$.ajax({
+				url: api + 'api/index/hyfa_list',
+				type: 'POST',
+				data: {
+					page: 1,
+					limit: 10
+				},
+				dataType: 'JSON',
+				success: function(res) {
+					console.log(res)
+					if (res.code == 1) {
+						var data = res.data;
+						var html = tmpl.render(data);
+						$("#html_temp").html(html);
+					}
+				}
+			});
+		}
+	</script>
+</html>
+
+</html>

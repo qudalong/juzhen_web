@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>新闻详情</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+	</head>
+	<body>
+		<!-- 导航 -->
+		<nav class="navbar navbar-expand-lg navbar-light  navbar-fixed-top">
+			<div class="container">
+				<a href="" class="navbar-brand"><img src="img/logo.png"></a>
+				<div class="d-flex ml-auto">
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#globalNavbar" aria-controls="globalNavbar"
+					 aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+				</div>
+				<div class="collapse navbar-collapse" id="globalNavbar">
+					<ul class=" navbar-nav ml-md-auto">
+						<li class="nav-item"><a class="nav-link" href="index.html">首页</a></li>
+						<li class="nav-item"><a class="nav-link" href="cpfw.html">产品服务</a></li>
+						<li class="nav-item"><a class="nav-link" href="hyfa.html">行业方案</a></li>
+						<li class="nav-item"><a class="nav-link" href="anli.html">案例展示</a></li>
+						<li class="nav-item"><a class="nav-link act" href="news.html">新闻动态</a></li>
+						<li class="nav-item"><a class="nav-link" href="aboutUs.html">关于我们</a></li>
+						<li class="nav-item"><a class="nav-link" href="telUs.html">联系我们</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="container-fluid">
+			<div class="row flex-xl-nowrap">
+				<main id="html_temp" class="col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main"></main>
+				<nav class="d-none d-xl-block col-xl-4 bd-toc" aria-label="Secondary navigation" style="border-left: 1px solid #ddd;">
+					<h4 style="font-size: 18px;">近期新闻</h4>
+					<ul id="html_news" class="section-nav"></ul>
+				</nav>
+			</div>
+		</div>
+		<footer class="footer mt30">
+			<div class="container">
+				<div class="row row-grid align-items-center mb-5">
+					<div class="col-md-10">
+						<div class="row">
+							<p class="col-md-3">服务热线：0755-88888</p>
+							<p class="col-md-3">邮箱：service@matrix.show</p>
+							<p class="col-md-6">地址：广东省深圳市南山区xx路xx大厦1888</p>
+						</div>
+
+						<div class="row">
+							<p class="col-md-12 mb-8">友情链接：xx科技集团</p>
+							<p class="col-md-12 mb-8">Copyright © 2012-2020 Tencent. All Rights Reserved.</p>
+						</div>
+					</div>
+					<div class="col-md-2 text-center">
+						<img  id="code"  src="img/code.png" height="100" width="100">
+					</div>
+				</div>
+			</div>
+		</footer>
+	</body>
+	<!-- js -->
+	<script type="text/x-jsrender" id="J_tpl_hyfa">
+		<h2 class="m30">{{:title}}</h2>,
+		<div class="text-right" style="color: #666;">时间：{{:createtime}}</div>
+		<div class="dec">{{:maincontent}}</div>
+	</script>
+	<script type="text/x-jsrender" id="J_tpl_news">
+		<li class="toc-entry toc-h2"><a href="newsDetail.html?id={{:id}}">{{:title}}</a></li>
+	</script>
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/util.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jsrender.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var id = parseURL().id;
+		dynamic_info(id);
+		getNewsList();
+
+		function dynamic_info() {
+			var tmpl = $.templates("#J_tpl_hyfa");
+			$.ajax({
+				url: api + 'api/index/dynamic_info',
+				type: 'POST',
+				data: {
+					id: id
+				},
+				dataType: 'JSON',
+				success: function(res) {
+					console.log(res)
+					if (res.code == 1) {
+						var data = res.data;
+						var html = tmpl.render(data);
+						$("#html_temp").html(html);
+					}
+				}
+			});
+		}
+
+		function getNewsList() {
+			var tmpl = $.templates("#J_tpl_news");
+			$.ajax({
+				url: api + 'api/index/dynamic_list',
+				type: 'GET',
+				data: {
+					page: 1,
+					limit: 10
+				},
+				dataType: 'JSON',
+				success: function(res) {
+					if (res.code == 1) {
+						var data = res.data;
+						if (data.length > 3) {
+							data = data.slice(0, 3)
+						}
+						var htmlNews = tmpl.render(data);
+						$("#html_news").html(htmlNews);
+					}
+				}
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>联系我们</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<style type="text/css">
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+			}
+
+			.iw_poi_title {
+				color: #CC5522;
+				font-size: 14px;
+				font-weight: bold;
+				overflow: hidden;
+				padding-right: 13px;
+				white-space: nowrap
+			}
+
+			.iw_poi_content {
+				font: 12px arial, sans-serif;
+				overflow: visible;
+				padding-top: 4px;
+				white-space: -moz-pre-wrap;
+				word-wrap: break-word
+			}
+		</style>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+	</head>
+	<body>
+		<!-- 导航 -->
+		<nav class="navbar navbar-expand-lg navbar-light  navbar-fixed-top">
+			<div class="container">
+				<a href="" class="navbar-brand"><img src="img/logo.png"></a>
+				<div class="d-flex ml-auto">
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#globalNavbar" aria-controls="globalNavbar"
+					 aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+				</div>
+				<div class="collapse navbar-collapse" id="globalNavbar">
+					<ul class=" navbar-nav ml-md-auto">
+						<li class="nav-item"><a class="nav-link" href="index.html">首页</a></li>
+						<li class="nav-item"><a class="nav-link" href="cpfw.html">产品服务</a></li>
+						<li class="nav-item"><a class="nav-link" href="hyfa.html">行业方案</a></li>
+						<li class="nav-item"><a class="nav-link" href="anli.html">案例展示</a></li>
+						<li class="nav-item"><a class="nav-link" href="news.html">新闻动态</a></li>
+						<li class="nav-item"><a class="nav-link" href="aboutUs.html">关于我们</a></li>
+						<li class="nav-item"><a class="nav-link act" href="telUs.html">联系我们</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<!-- banner -->
+		<div class="jumbotron masthead home-banner-bg lx-bg">
+			<div class="container text-center ">
+				<h2>新闻动态</h2>
+				<p>------------News trends------------</p>
+			</div>
+		</div>
+		<div class="projects-header">
+			<div class="row d-flex justify-content-around">
+				<div class=" mb-3 p-3 col-md-5">
+					<div id="html_temp" class="map-list"></div>
+				</div>
+			</div>
+			<div class="row d-flex justify-content-around">
+				<div class="card mb-3 p-1 col-md-5">
+					<div style="width:100%;height:443px;border:#ccc solid 1px;" id="dituContent"></div>
+				</div>
+			</div>
+		</div>
+		<footer class="footer mt30">
+			<div class="container">
+				<div class="row row-grid align-items-center mb-5">
+					<div class="col-md-10">
+						<div class="row">
+							<p class="col-md-3">服务热线：0755-88888</p>
+							<p class="col-md-3">邮箱：service@matrix.show</p>
+							<p class="col-md-6">地址：广东省深圳市南山区xx路xx大厦1888</p>
+						</div>
+
+						<div class="row">
+							<p class="col-md-12 mb-8">友情链接：xx科技集团</p>
+							<p class="col-md-12 mb-8">Copyright © 2012-2020 Tencent. All Rights Reserved.</p>
+						</div>
+					</div>
+					<div class="col-md-2 text-center">
+						<img id='code' src="img/code.png" height="100" width="100">
+					</div>
+				</div>
+			</div>
+		</footer>
+	</body>
+	<script type="text/x-jsrender" id="J_tpl_hyfa">
+		<div class="item">
+			<span class="icon info1"></span>
+			<span>网站：{{:link_url}}</span>
+		</div>
+		<div class="item">
+			<span class="icon info2"></span>
+			<span>邮箱：{{:email}}</span>
+		</div>
+		<div class="item">
+			<span class="icon info3"></span>
+			<span>服务热线：{{:mobile}}</span>
+		</div>
+		<div class="item">
+			<span class="icon info1"></span>
+			<span>公司地址：{{:address}}</span>
+		</div>
+		<div class="item">
+			<span class="icon info4"></span>
+			<span>邮编：{{:zipcode}}</span>
+		</div>
+	</script>
+	<!-- js -->
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		//创建和初始化地图函数：
+		function initMap() {
+			createMap(); //创建地图
+			setMapEvent(); //设置地图事件
+			addMapControl(); //向地图添加控件
+		}
+
+		//创建地图函数：
+		function createMap() {
+			var map = new BMap.Map("dituContent"); //在百度地图容器中创建一个地图
+			var point = new BMap.Point(113.778309, 34.756923); //定义一个中心点坐标
+			map.centerAndZoom(point, 18); //设定地图的中心点和坐标并将地图显示在地图容器中
+			window.map = map; //将map变量存储在全局
+		}
+
+		//地图事件设置函数：
+		function setMapEvent() {
+			map.enableDragging(); //启用地图拖拽事件，默认启用(可不写)
+			map.enableScrollWheelZoom(); //启用地图滚轮放大缩小
+			map.enableDoubleClickZoom(); //启用鼠标双击放大，默认启用(可不写)
+			map.enableKeyboard(); //启用键盘上下左右键移动地图
+		}
+
+		//地图控件添加函数：
+		function addMapControl() {
+			//向地图中添加缩放控件
+			var ctrl_nav = new BMap.NavigationControl({
+				anchor: BMAP_ANCHOR_TOP_LEFT,
+				type: BMAP_NAVIGATION_CONTROL_LARGE
+			});
+			map.addControl(ctrl_nav);
+			//向地图中添加缩略图控件
+			var ctrl_ove = new BMap.OverviewMapControl({
+				anchor: BMAP_ANCHOR_BOTTOM_RIGHT,
+				isOpen: 1
+			});
+			map.addControl(ctrl_ove);
+			//向地图中添加比例尺控件
+			var ctrl_sca = new BMap.ScaleControl({
+				anchor: BMAP_ANCHOR_BOTTOM_LEFT
+			});
+			map.addControl(ctrl_sca);
+		}
+
+
+		initMap(); //创建和初始化地图
+	</script>
+	<script src="js/util.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jsrender.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		fotter();
+
+		function fotter() {
+			var tmpl = $.templates("#J_tpl_hyfa");
+			$.ajax({
+				url: api + 'api/index/fotter',
+				type: 'POST',
+				data: {
+					page: 0,
+					limit: 100
+				},
+				dataType: 'JSON',
+				success: function(res) {
+					if (res.code == 1) {
+						var data = res.data;
+						var html = tmpl.render(data);
+						$("#html_temp").html(html);
+					}
+				}
+			});
+		}
+	</script>
+</html>
